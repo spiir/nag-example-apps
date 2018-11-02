@@ -76,7 +76,6 @@ class QuickSproutAPI {
         val request = Request.Builder()
             .url("""$url/accounts""")
             .post(body)
-            .addHeader("Authorization", """Bearer $token""")
             .addHeader("Content-Type", "application/json")
             .addHeader("cache-control", "no-cache")
             .build()

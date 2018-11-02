@@ -15,7 +15,7 @@ class NAGWebInterface(private val callback: NAGWebInterfaceCallback) {
 
     }
     @JavascriptInterface
-    fun sendReturnValue(data: String){
+    fun sendReturnValue(data: String) {
         callback.onSendReturnValue(data)
     }
 }
