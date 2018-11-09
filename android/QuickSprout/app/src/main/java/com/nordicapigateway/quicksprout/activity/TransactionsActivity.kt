@@ -6,12 +6,13 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.view.MenuItem
 import com.nordicapigateway.quicksprout.R
 import com.nordicapigateway.quicksprout.api.IQuickSproutAPI
 import com.nordicapigateway.quicksprout.api.QuickSproutAPI
 import org.json.JSONObject
 
-class AccountActivity : AppCompatActivity() {
+class TransactionsActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
@@ -19,19 +20,21 @@ class AccountActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_account)
-        supportActionBar?.title = "Accounts"
+        setContentView(R.layout.activity_transactions)
+        supportActionBar?.title = "Transactions"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        val id = intent.getStringExtra("id");
         val message = intent.getStringExtra(LOGIN_MESSAGE_CODE)
         val uri = Uri.parse(message)
         if(uri.queryParameterNames.contains("code")) {
-            QuickSproutAPI(this).tokens(uri.getQueryParameter("code"), object: IQuickSproutAPI{
+            QuickSproutAPI(this).tokens(uri.getQueryParameter("code"), object: IQuickSproutAPI {
                 override fun onToken(token: String) {
-                    QuickSproutAPI(this@AccountActivity).accounts(token, object: IQuickSproutAPI{
-                        override fun onAccount(accountsObject: JSONObject) {
-                            val accounts = accountsObject.getJSONArray("accounts")
-                            viewManager = LinearLayoutManager(this@AccountActivity)
-                            viewAdapter = AccountAdapter(accounts, message)
-                            recyclerView = this@AccountActivity.findViewById<RecyclerView>(R.id.recyclerView).apply {
+                    QuickSproutAPI(this@TransactionsActivity).transactions(token, id, object: IQuickSproutAPI {
+                        override fun onTransactions(TransactionssObject: JSONObject) {
+                            val transactions = TransactionssObject.getJSONArray("transactions")
+                            viewManager = LinearLayoutManager(this@TransactionsActivity)
+                            viewAdapter = TransactionsAdapter(transactions)
+                            recyclerView = this@TransactionsActivity.findViewById<RecyclerView>(R.id.recyclerView).apply {
                                 setHasFixedSize(true)
                                 layoutManager = viewManager
                                 adapter = viewAdapter
@@ -43,5 +46,12 @@ class AccountActivity : AppCompatActivity() {
         } else if(uri.queryParameterNames.contains("success")) {
             Log.d(LOGIN_MESSAGE_CODE, uri.getQueryParameter("success"))
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if(item?.itemId == android.R.id.home) {
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

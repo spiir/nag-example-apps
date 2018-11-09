@@ -1,5 +1,6 @@
 const http = require('http');
 const https = require('https');
+var url  = require('url');
 require('dotenv').config()
 
 const HOSTNAME = '127.0.0.1';
@@ -86,10 +87,39 @@ const server = http.createServer((request, result) => {
       })
       console.log(get.url)
       get.end()
+
+    });
+  } else if(request.url.includes('/accounts/transactions')) {
+    var url_parts = url.parse(request.url, true);
+    var query = url_parts.query;
+    var id = query.id;
+    let payload = ''
+    request.on('data', (data) => {
+      payload += data;
+    }).on('end', () => {
+      payload = JSON.parse(payload);
+      console.log(getOptions(NAG_HOST, NAG_PORT, payload.token, '/v1/accounts/' + id + '/transactions'))
+      let get = https.request(getOptions(NAG_HOST, NAG_PORT, payload.token, '/v1/accounts/' + id + '/transactions'), res => {
+        var chunks = []
+        res.on('data', (chunk) => {
+          chunks.push(chunk);
+        })
+        res.on('end', () => {
+          var body = Buffer.concat(chunks);
+          result.statusCode = 200;
+          // result.setHeader('Content-Type', 'application/json');
+          // result.end(body.toString());
+          console.log(new Date() ,body.toString());
+          result.end(body.toString())
+        })
+  
+      })
+      console.log(get.url)
+      get.end()
+      
     });
 
-
-  } else {
+  }  else {
     result.statusMessage = 200
     result.setHeader('Content-Type', 'application/json')
     result.end(JSON.stringify({"greetings":"From Aarhus with ❤"}))
@@ -103,8 +133,8 @@ const postOptions = function(host, port, path) {
     path,
     method: 'POST',
     headers: {
-      "X-Client-ID": process.env.CLIENT_ID,
-      "X-Client-Secret": process.env.CLIENT_SECRET,
+      "X-Client-ID": "spiir-fa9d7a22-9d7e-439b-b4c1-87169ef93440",
+      "X-Client-Secret": "e353f28c83fbe4ce5c976dd6ba181ae48a4dc09f35df08ddda71817122ba836f",
       "Content-Type": "application/json",
       "Cache-Control": "no-cache",
     }
@@ -119,8 +149,8 @@ const getOptions = function(host, port, token, path) {
     method: 'GET',
     headers: {
       "Authorization": `Bearer ${token}`,
-      "X-Client-ID": process.env.CLIENT_ID,
-      "X-Client-Secret": process.env.CLIENT_SECRET,
+      "X-Client-ID": "spiir-fa9d7a22-9d7e-439b-b4c1-87169ef93440",
+      "X-Client-Secret": "e353f28c83fbe4ce5c976dd6ba181ae48a4dc09f35df08ddda71817122ba836f",
       "Content-Type": "application/json",
       "Cache-Control": "no-cache",
     }
