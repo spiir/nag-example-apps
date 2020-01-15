@@ -39,6 +39,32 @@ public struct QSAPI {
         }
     }
     
+    static func createPayment(language: String, redirectUrl: String, completionBlock: @escaping (String) -> Void) {
+        let parameters = ["language" : language, "redirectUrl": redirectUrl,]
+        if let request = buildPostRequest( endpoint: URL(string: BASE_URL + "/create-payment")!, body: parameters) {
+            let session = URLSession.shared
+            session.dataTask(with: request) { (data, response, error) in
+                if let data = data {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                        
+                        if let authUrl = json?["redirectUrl"] as? String {
+                            DispatchQueue.main.async {
+                                completionBlock(authUrl);
+                            }
+                        }
+                        
+                        if let error = json?["error"] as? String {
+                            print(error)
+                        }
+                    } catch {
+                        print(error)
+                    }
+                }
+                }.resume()
+        }
+    }
+    
     static func tokens(code: String, completionBlock: @escaping (String) -> Void) {
         let params = ["code" : code]
         if let request = buildPostRequest(endpoint: URL(string: BASE_URL + "/tokens")!, body: params) {

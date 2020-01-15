@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.nordicapigateway.quicksprout.R
 import com.nordicapigateway.quicksprout.api.IQuickSproutAPI
@@ -19,12 +20,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        button.setOnClickListener {
+        login_button.setOnClickListener {
             QuickSproutAPI(this).init(object: IQuickSproutAPI {
                 override fun onInit(response: Response) {
                     val json = JSONObject(response.body()?.string())
                     startActivityForResult(Intent(this@MainActivity, LoginActivity::class.java).apply {
                         putExtra("html", json.getString("authUrl"))
+                    }, 0)
+                }
+            })
+            startActivity(intent)
+
+        }
+
+        payment_button.setOnClickListener {
+            QuickSproutAPI(this).createPayment(object: IQuickSproutAPI {
+                override fun onPaymentCreate(response: Response) {
+                    val json = JSONObject(response.body()?.string())
+                    startActivityForResult(Intent(this@MainActivity, LoginActivity::class.java).apply {
+                        putExtra("html", json.getString("redirectUrl"))
                     }, 0)
                 }
             })

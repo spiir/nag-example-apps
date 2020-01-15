@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		219051AB23CF066300810AB2 /* PaymentWebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 219051AA23CF066300810AB2 /* PaymentWebViewViewController.swift */; };
 		A83D66C522A7E35C0070BF22 /* NAGLoginSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A83D66C422A7E35C0070BF22 /* NAGLoginSDK.framework */; };
-		A83D66C622A7E41B0070BF22 /* NAGLoginSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A83D66C422A7E35C0070BF22 /* NAGLoginSDK.framework */; };
+		A83D66C622A7E41B0070BF22 /* NAGLoginSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A83D66C422A7E35C0070BF22 /* NAGLoginSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A83D66C822A7FA410070BF22 /* QSAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83D66C722A7FA410070BF22 /* QSAmount.swift */; };
 		A83D66CA22A80ECB0070BF22 /* QSGetAccountsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83D66C922A80ECB0070BF22 /* QSGetAccountsResponse.swift */; };
 		A83D66CC22A80F8B0070BF22 /* QSAccountNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83D66CB22A80F8B0070BF22 /* QSAccountNumber.swift */; };
@@ -66,6 +67,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		219051AA23CF066300810AB2 /* PaymentWebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentWebViewViewController.swift; sourceTree = "<group>"; };
 		A83D66C422A7E35C0070BF22 /* NAGLoginSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NAGLoginSDK.framework; sourceTree = "<group>"; };
 		A83D66C722A7FA410070BF22 /* QSAmount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QSAmount.swift; sourceTree = "<group>"; };
 		A83D66C922A80ECB0070BF22 /* QSGetAccountsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QSGetAccountsResponse.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 		A83D66CF22A851B50070BF22 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				219051AA23CF066300810AB2 /* PaymentWebViewViewController.swift */,
 				AF35F2C42166161D0011ABA6 /* HomeViewController.swift */,
 				AF59CF5D218873E2001BAB4F /* AccountsViewController.swift */,
 				AFD9317D219C4A3400099325 /* TransactionsTableViewController.swift */,
@@ -296,12 +299,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1000;
-				LastUpgradeCheck = 1000;
+				LastUpgradeCheck = 1120;
 				ORGANIZATIONNAME = "Brian Vestergaard Danielsen";
 				TargetAttributes = {
 					AF35F2BE2166161D0011ABA6 = {
 						CreatedOnToolsVersion = 10.0;
-						LastSwiftMigration = 1020;
+						LastSwiftMigration = 1120;
 					};
 					AF35F2D22166161E0011ABA6 = {
 						CreatedOnToolsVersion = 10.0;
@@ -370,6 +373,7 @@
 				AF4C4937219D843700B169DF /* QSTransactionTableViewCell.swift in Sources */,
 				AFD9317E219C4A3400099325 /* TransactionsTableViewController.swift in Sources */,
 				AF70A524216B3E29001D23FC /* WebViewViewController.swift in Sources */,
+				219051AB23CF066300810AB2 /* PaymentWebViewViewController.swift in Sources */,
 				AF70A526216DF3D4001D23FC /* QSAPI.swift in Sources */,
 				AF35F2C52166161D0011ABA6 /* HomeViewController.swift in Sources */,
 				AF59CF5C218868AA001BAB4F /* QSAccount.swift in Sources */,
@@ -559,6 +563,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 739F28RNN5;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -574,6 +579,7 @@
 				NAG_API_URL = "http://localhost:3000/init";
 				PRODUCT_BUNDLE_IDENTIFIER = dk.nag.QuickSprout;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -583,6 +589,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 739F28RNN5;
 				FRAMEWORK_SEARCH_PATHS = (

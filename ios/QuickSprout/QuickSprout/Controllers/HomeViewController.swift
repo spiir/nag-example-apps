@@ -14,10 +14,12 @@ protocol HomeViewControllerDelegate: AnyObject {
 
 class HomeViewController: UIViewController {
     
+    @IBOutlet weak var paymentButton: UIButton!
     @IBOutlet weak var webViewButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        styleButton(button: paymentButton)
         styleButton(button: webViewButton)
     }
     

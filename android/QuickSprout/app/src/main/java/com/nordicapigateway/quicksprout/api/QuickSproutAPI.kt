@@ -35,6 +35,30 @@ class QuickSproutAPI constructor(activity: AppCompatActivity) {
         })
     }
 
+    fun createPayment(callback: IQuickSproutAPI) {
+        val client = OkHttpClient()
+
+        val mediaType = MediaType.parse("application/json")
+        val body = RequestBody.create(mediaType, """{"redirectUrl": "nagdemoapp://"}""")
+        val request = Request.Builder()
+            .url("""$url/create-payment""")
+            .post(body)
+            .addHeader("Content-Type", "application/json")
+            .addHeader("cache-control", "no-cache")
+            .build()
+        client.newCall(request).enqueue(object: Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.d("API", e.message)
+            }
+
+            override fun onResponse(call: Call, response: Response) {
+                activity.runOnUiThread {
+                    callback.onPaymentCreate(response)
+                }
+            }
+        })
+    }
+
     fun tokens(code:String, callback: IQuickSproutAPI) {
         val client = OkHttpClient()
         val body = RequestBody.create(MediaType.parse("application/json"), """{"code" : "$code" }""")

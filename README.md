@@ -52,7 +52,7 @@ curl -X POST \
   -d '{"code": <CODE>}'
 ```
 
-### tokens ([documentation](https://api.nordicapigateway.com/docs/index.html#operation/GetAccountsV2))
+### accounts ([documentation](https://api.nordicapigateway.com/docs/index.html#operation/GetAccountsV2))
 
 ```
 curl -X POST \
@@ -61,6 +61,35 @@ curl -X POST \
   -d '{
 	"token": <ACCESS_TOKEN>
 }'
+```
+
+### create-payment ([documentation](https://docs.nordicapigateway.com/#/payment-initiation/payments/))
+
+```
+curl -X POST \
+  http://localhost:3000/create-payment \
+  -H 'Content-Type: application/json' \
+  -d '{
+        "redirectUrl": <REDIRECT_URL>,
+        "language": <LANGUAGE>,
+        "userHash": "1234567890",
+        "request": {
+            "message": "Message for the receiver of the payment",
+            "transactionText": "Test payment",
+            "destination": {
+                "iban": {
+                    "ibanNumber": "FI000001"
+                }
+            },
+            "amount": {
+                "value": "1.00"
+                "currency": "DKK"
+            },
+            "execution": {
+                "type": "Instant",
+            }
+        }
+      }'
 ```
 
 ### Setup Xcode project
